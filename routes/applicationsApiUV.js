@@ -19,7 +19,7 @@ var upload = multer({
     storage:storage,
 })
 
-router.post('/upload', upload.single('resume'), async(req, res, next)=>{
+router.post('/api/upload', upload.single('resume'), async(req, res, next)=>{
    try {
     const url = req.protocol + '://' + req.get('host')
     const user = new ApplicationData({
@@ -36,9 +36,7 @@ router.post('/upload', upload.single('resume'), async(req, res, next)=>{
    }
 })
 
-
-
-router.get('/applicationdata/:id', async (req, res) => {       // getdata for admin to collect unverified applications
+router.get('/api/applicationdata/:id', async (req, res) => {       // getdata for admin to collect unverified applications
     try {
         let id = req.params.id
         let list = await ApplicationData.find({job_id: id , approval_status: "not approved"})
@@ -48,7 +46,7 @@ router.get('/applicationdata/:id', async (req, res) => {       // getdata for ad
     }
 }) 
 
-router.get('/UVApps', async (req, res) => {      //  unverified applications
+router.get('/api/UVApps', async (req, res) => {      //  unverified applications
     try {
      
         let list = await ApplicationData.find({ approval_status: "not approved"})
@@ -59,7 +57,7 @@ router.get('/UVApps', async (req, res) => {      //  unverified applications
 })
 
 
-router.get('/VApps', async (req, res) => {      //  verified applications
+router.get('/api/VApps', async (req, res) => {      //  verified applications
     try {
        
         let list = await ApplicationData.find({ approval_status: "verified"})
@@ -68,7 +66,7 @@ router.get('/VApps', async (req, res) => {      //  verified applications
         console.log(error)
     }
 })
-router.get('/Apps', async (req, res) => {      //  verified applications
+router.get('/api/Apps', async (req, res) => {      //  verified applications
     try {
        
         let list = await ApplicationData.find({ approval_status: "verified",postedBy:"employe"})
@@ -77,7 +75,7 @@ router.get('/Apps', async (req, res) => {      //  verified applications
         console.log(error)
     }
 })
-router.get('/applicationdatas/:id', async (req, res) => {       // getdata for verified applications
+router.get('/api/applicationdatas/:id', async (req, res) => {       // getdata for verified applications
     try {
         let id = req.params.id
         let list = await ApplicationData.find({job_id: id,approval_status:"verified" })
@@ -87,7 +85,7 @@ router.get('/applicationdatas/:id', async (req, res) => {       // getdata for v
     }
 })
 
-router.delete('/delete/:id', async (req, res)=>{
+router.delete('/api/delete/:id', async (req, res)=>{
     try {
         id = req.params.id
         let data = await ApplicationData.findByIdAndDelete(id)
@@ -97,7 +95,7 @@ router.delete('/delete/:id', async (req, res)=>{
     }
 })
 
-router.put('/verify', async(req, res)=>{
+router.put('/api/verify', async(req, res)=>{
     try {
         console.log(req.body.id)
         let id = req.body.id

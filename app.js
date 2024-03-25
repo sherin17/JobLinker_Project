@@ -27,3 +27,8 @@ app.listen(port,()=>{
     console.log(`server is connected to ${port}....`)
 })
 
+app.use(express.static('./dist/frontEnd'));
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, '/dist/frontEnd/index.html'));
+  });
+  
